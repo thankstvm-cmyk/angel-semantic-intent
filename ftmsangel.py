@@ -128,10 +128,10 @@ class Angel:
         return answer or "I could not identify the right source for that request. Please provide more detail."
 
     def greeting_reply(self, question):
-        """Handle greeting-based interactions with exact echo-back responses - NO FTMS MENU."""
+        """Handle greetings with EXACT echo-back - NO FTMS MENU."""
         text = re.sub(r"\s+", " ", question.lower()).strip()
         
-        # Special knowledge questions (who created you, mission, etc.)
+        # Special knowledge questions
         if any(term in text for term in ("who developed you", "who developed", "who created you", "your creator")):
             return (
                 "I was developed by Thankappan Dharmanathan for FTMS FleetPro. "
@@ -170,7 +170,7 @@ class Angel:
                 "understand fleet operations, identify risks, and make confident decisions."
             )
         
-        # Time-based greetings - EXACT ECHO-BACK (NO FTMS MENU)
+        # TIME-BASED GREETINGS - EXACT ECHO-BACK
         if "good morning" in text:
             return "Good Morning. How can I help you today?"
         if "good afternoon" in text or "good after noon" in text:
@@ -188,7 +188,7 @@ class Angel:
         if text == "night":
             return "Good Night. How can I help you today?"
         
-        # Basic greetings - EXACT ECHO-BACK (NO FTMS MENU)
+        # BASIC GREETINGS - EXACT ECHO-BACK
         if any(term in text for term in ("hi", "hey", "hello", "hai", "hii", "helo", "hellow")):
             return "Hi. How can I help you today?"
         

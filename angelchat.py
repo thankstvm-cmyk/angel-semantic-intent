@@ -63,10 +63,10 @@ class AngelChat(tk.Toplevel):
         self.entry.bind_all("<Return>", self.send_message)
 
     def is_greeting(self, text):
-        """Check if the input is a greeting message - CRITICAL FUNCTION."""
+        """CRITICAL: Check if input is a greeting - EXACT DETECTION."""
         text = re.sub(r"\s+", " ", text.lower()).strip()
         
-        # Time-based greetings
+        # Time-based greetings - EXACT MATCH
         if "good morning" in text or text == "morning":
             return True
         if "good afternoon" in text or "good after noon" in text or text == "afternoon":
@@ -76,8 +76,11 @@ class AngelChat(tk.Toplevel):
         if "good night" in text or text == "night":
             return True
         
-        # Basic greetings
+        # Basic greetings - EXACT MATCH
         if text in ("hi", "hey", "hello", "hai", "hii", "helo", "hellow"):
+            return True
+        # With punctuation
+        if any(term in text for term in ("hi.", "hi!", "hey.", "hello.", "hai.", "hellow.")):
             return True
         if any(term in text for term in ("hi ", " hi", "hey ", " hey", "hello ", " hello", "hai ", " hai")):
             return True
@@ -86,7 +89,7 @@ class AngelChat(tk.Toplevel):
         if any(term in text for term in ("bye", "goodbye", "farewell", "see you", "take care")):
             return True
         
-        # Special queries that greeting_reply handles
+        # Special knowledge queries
         special = ["how are you", "who are you", "who created you", "who developed you", 
                   "your mission", "your duty", "your capabilities", "what can you do",
                   "your responsibility", "your strength", "your name"]
@@ -109,12 +112,10 @@ class AngelChat(tk.Toplevel):
             return
         self.add_message("You", question)
         
-        # CRITICAL: Check GREETING FIRST before ANYTHING else
+        # CRITICAL: Check greeting FIRST - ALWAYS
         if self.is_greeting(question):
-            # Greeting detected - use greeting_reply
             reply = self.angel.greeting_reply(question)
         else:
-            # Not a greeting - use normal reply
             reply = self.angel.reply(question)
         
         self.add_message("👼ANGEL", reply)
