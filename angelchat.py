@@ -1,7 +1,9 @@
 import tkinter as tk
+import re
 from datetime import datetime
 from .config import ANGEL_ICON, ICON_DIR
 from PIL import Image, ImageTk
+
 class AngelChat(tk.Toplevel):
 
     def __init__(self, parent, angel):
@@ -45,7 +47,6 @@ class AngelChat(tk.Toplevel):
             "👼 ANGEL:\n"
             "Hello Sir!\n\n"
             f"Current Module : {angel.current_module}\n\n"
-            "Please type Hi to begin?\n\n"
         )
         self.chat.config(state="disabled")
         
@@ -59,10 +60,34 @@ class AngelChat(tk.Toplevel):
         tk.Button(bottom, text="📤SEND", width=8,
         command = self.send_message).pack(side = "left", padx=5)
         self.entry.bind_all("<Return>", self.send_message)
+
+    def is_greeting(self, text):
+        """Check if the input is a greeting message."""
+        text = re.sub(r"\s+", " ", text.lower()).strip()
+        
+        # Time-based greetings
+        time_greetings = ["good morning", "good afternoon", "good evening", "good night", 
+                         "morning", "afternoon", "evening", "night", "good after noon"]
+        
+        # Basic greetings
+        basic_greetings = ["hi", "hey", "hello", "hai", "hii", "helo", "hellow"]
+        
+        # Farewells
+        farewells = ["bye", "goodbye", "farewell", "see you", "take care"]
+        
+        # Special queries that greeting_reply handles
+        special = ["how are you", "who are you", "who created you", "who developed you", 
+                  "your mission", "your duty", "your capabilities", "what can you do",
+                  "your responsibility", "your strength", "your name"]
+        
+        for greeting in time_greetings + basic_greetings + farewells + special:
+            if greeting in text:
+                return True
+        return False
         
     def update_module(self, module_name):
         self.angel.current_module = module_name
-        
+         
     def clear_placeholder(self, event):
         if self.entry.get() == "Type your questions or instruction here...":
             self.entry.delete(0, "end")
@@ -72,7 +97,13 @@ class AngelChat(tk.Toplevel):
         if question == "":
             return
         self.add_message("You", question)
-        reply = self.angel.reply(question)
+        
+        # Route to greeting_reply if it's a greeting, otherwise use reply
+        if self.is_greeting(question):
+            reply = self.angel.greeting_reply(question)
+        else:
+            reply = self.angel.reply(question)
+        
         self.add_message("👼ANGEL", reply)
         self.entry.delete(0, "end")
         self.entry.focus_set()
