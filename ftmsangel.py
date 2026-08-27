@@ -129,6 +129,8 @@ class Angel:
 
     def greeting_reply(self, question):
         text = re.sub(r"\s+", " ", question.lower()).strip()
+        
+        # Special knowledge questions (who created you, mission, etc.)
         if any(term in text for term in ("who developed you", "who developed", "who created you", "your creator")):
             return (
                 "I was developed by Thankappan Dharmanathan for FTMS FleetPro. "
@@ -166,4 +168,42 @@ class Angel:
                 "My name is Angel. I am your friendly FTMS FleetPro intelligent assistant, here to help you "
                 "understand fleet operations, identify risks, and make confident decisions."
             )
-        return "Hello. I am Angel, your FTMS FleetPro assistant. How can I help you today?"
+        
+        # Time-based greetings with FTMS context menu
+        if "good morning" in text or text == "morning":
+            return (
+                "Good morning! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
+                "Route Details / Any doubts clarification?)"
+            )
+        if "good afternoon" in text or "good after noon" in text or text == "afternoon":
+            return (
+                "Good afternoon! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
+                "Route Details / Any doubts clarification?)"
+            )
+        if "good evening" in text or text == "evening":
+            return (
+                "Good evening! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
+                "Route Details / Any doubts clarification?)"
+            )
+        if "good night" in text or text == "night":
+            return (
+                "Good night! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
+                "Route Details / Any doubts clarification?)"
+            )
+        
+        # Basic greetings with FTMS context menu
+        if any(term in text for term in ("hi", "hey", "hello", "hai", "hii", "helo", "hellow")):
+            return (
+                "Hi! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
+                "Route Details / Any doubts clarification?)"
+            )
+        
+        # Farewells
+        if any(term in text for term in ("bye", "goodbye", "farewell", "see you", "take care")):
+            return "Thank you. Have a great day!"
+        
+        # Default fallback
+        return (
+            "Hello! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
+            "Route Details / Any doubts clarification?)"
+        )
