@@ -1,5 +1,6 @@
 """Short-lived conversation context for precise ANGEL follow-up handling."""
 
+from collections import deque
 import re
 
 
@@ -17,6 +18,7 @@ class ConversationContext:
         self.last_engine = None
         self.pending_authority = None
         self.pending_correction = None
+        self.assistant_turns = deque(maxlen=10)
 
     def resolve(self, question, detected_engine):
         """Prefer the prior topic only for an explicit short follow-up."""
@@ -27,6 +29,13 @@ class ConversationContext:
     def record(self, engine_name, answer):
         if answer and engine_name in self.CONTEXTUAL_ENGINES:
             self.last_engine = engine_name
+
+    def record_response(self, answer):
+        if answer:
+            self.assistant_turns.append(answer)
+
+    def recent_assistant_turns(self, limit=5):
+        return list(self.assistant_turns)[-limit:]
 
     def set_pending_authority(self, authority):
         self.pending_authority = authority

@@ -43,9 +43,8 @@ class AngelChat(tk.Toplevel):
         self.chat.insert(
             "end",
             "👼 ANGEL:\n"
-            "Hello Sir!\n\n"
             f"Current Module : {angel.current_module}\n\n"
-            "Please type Hi to begin?\n\n"
+            "Hello! How can I help you today?\n\n"
         )
         self.chat.config(state="disabled")
         
