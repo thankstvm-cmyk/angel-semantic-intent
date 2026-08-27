@@ -128,6 +128,7 @@ class Angel:
         return answer or "I could not identify the right source for that request. Please provide more detail."
 
     def greeting_reply(self, question):
+        """Handle greeting-based interactions with exact echo-back responses - NO FTMS MENU."""
         text = re.sub(r"\s+", " ", question.lower()).strip()
         
         # Special knowledge questions (who created you, mission, etc.)
@@ -162,48 +163,38 @@ class Angel:
                 "verification when an answer is outside FleetPro."
             )
         if "how are you" in text:
-            return "I am well and ready to help. What would you like to check in FTMS FleetPro?"
+            return "Hi, How are you. How can I help you today?"
         if any(term in text for term in ("who are you", "what is your name", "your name")):
             return (
                 "My name is Angel. I am your friendly FTMS FleetPro intelligent assistant, here to help you "
                 "understand fleet operations, identify risks, and make confident decisions."
             )
         
-        # Time-based greetings with FTMS context menu
-        if "good morning" in text or text == "morning":
-            return (
-                "Good morning! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
-                "Route Details / Any doubts clarification?)"
-            )
-        if "good afternoon" in text or "good after noon" in text or text == "afternoon":
-            return (
-                "Good afternoon! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
-                "Route Details / Any doubts clarification?)"
-            )
-        if "good evening" in text or text == "evening":
-            return (
-                "Good evening! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
-                "Route Details / Any doubts clarification?)"
-            )
-        if "good night" in text or text == "night":
-            return (
-                "Good night! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
-                "Route Details / Any doubts clarification?)"
-            )
+        # Time-based greetings - EXACT ECHO-BACK (NO FTMS MENU)
+        if "good morning" in text:
+            return "Good Morning. How can I help you today?"
+        if "good afternoon" in text or "good after noon" in text:
+            return "Good Afternoon. How can I help you today?"
+        if "good evening" in text:
+            return "Good Evening. How can I help you today?"
+        if "good night" in text:
+            return "Good Night. How can I help you today?"
+        if text == "morning":
+            return "Good Morning. How can I help you today?"
+        if text == "afternoon" or text == "after noon":
+            return "Good Afternoon. How can I help you today?"
+        if text == "evening":
+            return "Good Evening. How can I help you today?"
+        if text == "night":
+            return "Good Night. How can I help you today?"
         
-        # Basic greetings with FTMS context menu
+        # Basic greetings - EXACT ECHO-BACK (NO FTMS MENU)
         if any(term in text for term in ("hi", "hey", "hello", "hai", "hii", "helo", "hellow")):
-            return (
-                "Hi! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
-                "Route Details / Any doubts clarification?)"
-            )
+            return "Hi. How can I help you today?"
         
         # Farewells
         if any(term in text for term in ("bye", "goodbye", "farewell", "see you", "take care")):
             return "Thank you. Have a great day!"
         
         # Default fallback
-        return (
-            "Hello! How can I help you today? (FTMS - Section / Documents Renewal / Vehicle Status / "
-            "Route Details / Any doubts clarification?)"
-        )
+        return "Hello. How can I help you today?"
