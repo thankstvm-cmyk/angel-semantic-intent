@@ -4,6 +4,7 @@ import re
 
 from .engine_contract import AngelEngine
 from .ftms_knowledge import FTMSKnowledge
+from .mathematics_engine import MathematicsEngine
 from .operations_engine import ActionRouter, ApprovedInternetLookup
 
 
