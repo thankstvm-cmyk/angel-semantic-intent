@@ -11,6 +11,7 @@ from .core_engines import (
     DatabaseEngine,
     DateTimeEngineAdapter,
     FleetAnalysisEngine,
+    MathematicsEngine,
     ProductKnowledgeEngine,
     RegulatoryEngine,
     ReportEngine,
@@ -60,6 +61,7 @@ class Angel:
             TechnicalEngine(self.intelligence),
             FleetAnalysisEngine(self.intelligence),
             ProductKnowledgeEngine(),
+            MathematicsEngine(),
             RegulatoryEngine(regulatory_lookup),
             ApprovedSourceFallbackEngine(),
         )
