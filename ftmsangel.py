@@ -24,6 +24,7 @@ from .DateTimeEngine import DateTimeEngine
 from .engine_contract import AngelEngine
 from .fleet_intelligence import FleetIntelligence
 from .intent_router import IntentRouter
+from .mathematics_engine import MathematicsEngine
 from .operations_engine import ApprovedInternetLookup
 from .query_clarifier import QueryClarifier
 
@@ -60,6 +61,7 @@ class Angel:
             TechnicalEngine(self.intelligence),
             FleetAnalysisEngine(self.intelligence),
             ProductKnowledgeEngine(),
+            MathematicsEngine(),
             RegulatoryEngine(regulatory_lookup),
             ApprovedSourceFallbackEngine(),
         )
